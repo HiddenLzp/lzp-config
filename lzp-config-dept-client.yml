@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active:
+      - dev
+---
+server:
+  port: 8001 #注册中心占用7001端口，
+spring:
+  profiles: dev
+  application:
+    name: lzp-config-dept-client
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///cloudDB01?serverTimezone=GMT%2B8
+    username: root
+    password: 1234
+    dbcp2:
+      min-idle: 5                             #数据库最小维持连接数
+      initial-size: 5                         #初始化连接数
+      max-total: 5                            #最大连接数
+      max-wait-millis:  180                   #等待连接获取的最大超时时间 
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.cfg.xml
+  type-aliases-package: com.lzp.springcloud.entites
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/
+  instance:
+    instance-id: lzp-dept8001                   #自定义服务名称信息
+    prefer-ip-address: true                     #访问路径可以显示ip地址
